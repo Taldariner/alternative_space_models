@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 	global_transform.basis = player_camera.global_transform.basis
 	# print("Viewport : ", get_viewport().get_visible_rect().size)
 	# print("Portal   : ", $"..".size)
-	print(global_transform.origin)
+	# print(global_transform.origin)
 	$"..".size = player_camera.get_viewport().get_visible_rect().size
 	$"..".msaa_3d = player_camera.get_viewport().msaa_3d
 	$"..".screen_space_aa = player_camera.get_viewport().screen_space_aa

@@ -59,7 +59,6 @@ spot_range = 10.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(-0.853553, 0.146447, 0.5, 0.5, 0.5, 0.707107, -0.146447, 0.853553, -0.5, 10, 10, -10)
-shadow_enabled = true
 shadow_reverse_cull_face = true
 directional_shadow_blend_splits = true
 sky_mode = 1
@@ -99,7 +98,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 environment = ExtResource("1_muboy")
 current = true
 fov = 55.0
-near = 0.001
 
 [node name="Portal1" parent="." node_paths=PackedStringArray("connected_portal", "player", "player_camera") instance=ExtResource("3_fuclf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1.5, 0)
