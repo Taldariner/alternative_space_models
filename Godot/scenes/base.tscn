@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 "
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ew07v"]
-size = Vector3(25, 0.1, 25)
+size = Vector3(25, 0.5, 25)
 
 [sub_resource type="BoxMesh" id="BoxMesh_80unl"]
 lightmap_size_hint = Vector2i(254, 131)
@@ -38,6 +38,7 @@ albedo_color = Color(0, 1, 0, 1)
 albedo_texture = ExtResource("3_2fm4v")
 uv1_scale = Vector3(5, 7.5, 1)
 uv1_offset = Vector3(0.033, 0, 0)
+texture_filter = 5
 
 [sub_resource type="BoxMesh" id="BoxMesh_6sfjh"]
 lightmap_size_hint = Vector2i(254, 131)
@@ -48,6 +49,7 @@ size = Vector3(25, 0, 25)
 albedo_texture = ExtResource("3_2fm4v")
 uv1_scale = Vector3(5, 7.5, 0)
 uv1_offset = Vector3(-1.667, 0, 0)
+texture_filter = 5
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_g06u5"]
 lightmap_size_hint = Vector2i(49, 34)
@@ -71,6 +73,7 @@ transform = Transform3D(-0.853553, 0.146447, 0.5, 0.5, 0.5, 0.707107, -0.146447,
 light_color = Color(1, 1, 0.784314, 1)
 light_bake_mode = 1
 light_cull_mask = 4294967293
+shadow_enabled = true
 shadow_reverse_cull_face = true
 directional_shadow_mode = 0
 directional_shadow_blend_splits = true
@@ -94,6 +97,9 @@ current = true
 fov = 55.0
 near = 0.001
 
+[node name="Marker3D" type="Marker3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.75, -0.75)
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 10, 10, 10)
 fov = 90.0
@@ -109,6 +115,7 @@ script = SubResource("GDScript_bpmao")
 [node name="Map" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 shape = SubResource("BoxShape3D_ew07v")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Map"]
@@ -127,13 +134,13 @@ mesh = SubResource("CylinderMesh_g06u5")
 skeleton = NodePath("")
 
 [node name="Portal1" parent="." node_paths=PackedStringArray("connected_portal", "player", "player_camera") instance=ExtResource("3_fuclf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 0)
 connected_portal = NodePath("../Portal2")
 player = NodePath("../CharacterBody3D")
 player_camera = NodePath("../CharacterBody3D/Camera3D")
 
 [node name="Portal2" parent="." node_paths=PackedStringArray("connected_portal", "player", "player_camera") instance=ExtResource("3_fuclf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0)
 connected_portal = NodePath("../Portal1")
 player = NodePath("../CharacterBody3D")
 player_camera = NodePath("../CharacterBody3D/Camera3D")

@@ -5,6 +5,7 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5 * 2
 const mouse_sensitivity = 0.002
 
+var snowball = preload("res://scenes/snowball.tscn")
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -35,3 +36,11 @@ func _input(event):
 		rotate_y(-event.relative.x * mouse_sensitivity)
 		$Camera3D.rotate_x(-event.relative.y * mouse_sensitivity)
 		$Camera3D.rotation.x = clampf($Camera3D.rotation.x, -deg_to_rad(70), deg_to_rad(70))
+	if event.is_action_pressed("ui_fire"):
+		var new_snowball = snowball.instantiate()
+		new_snowball.position = $Marker3D.global_position
+		get_tree().current_scene.add_child(new_snowball)
+		var force = 18
+		var up_force = 3.5
+		new_snowball.apply_central_impulse($Camera3D.global_transform.basis.z.normalized() * -force + Vector3(0, up_force, 0))
+		

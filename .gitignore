@@ -13,3 +13,15 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# Flax specific ignores
+Binaries/
+Cache/
+Logs/
+Output/
+Screenshots/
+*.HotReload.*
+
+# Currently not ready project versions
+Flax/
+Defold/

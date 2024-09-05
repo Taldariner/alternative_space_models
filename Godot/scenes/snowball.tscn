@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqsry04qam20c"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_too23"]
+radius = 0.11
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gffpg"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_rip5u"]
+material = SubResource("StandardMaterial3D_gffpg")
+radius = 0.1
+height = 0.2
+
+[node name="Node3D" type="RigidBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_too23")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+physics_interpolation_mode = 1
+mesh = SubResource("SphereMesh_rip5u")

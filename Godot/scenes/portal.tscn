@@ -13,7 +13,7 @@ lightmap_size_hint = Vector2i(28, 30)
 size = Vector3(3.9, 0.5, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yh5tx"]
-size = Vector3(3, 4, 0.2)
+size = Vector3(3, 4, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_figwg"]
 viewport_path = NodePath("PortalSurface/SubViewport")
@@ -22,6 +22,7 @@ viewport_path = NodePath("PortalSurface/SubViewport")
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_4gm4d")
+shader_parameter/blue_tint_strength = 0.0
 shader_parameter/texture_albedo = SubResource("ViewportTexture_figwg")
 
 [node name="Portal" type="StaticBody3D"]
