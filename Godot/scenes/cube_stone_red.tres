@@ -1,0 +1,12 @@
+[gd_resource type="BoxMesh" load_steps=3 format=3 uid="uid://d10dp04muorb"]
+
+[ext_resource type="Texture2D" uid="uid://cimed4exlgyt8" path="res://assets/smooth_stone.png" id="1_na41v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_21t2j"]
+albedo_color = Color(1, 0.498039, 0.498039, 1)
+albedo_texture = ExtResource("1_na41v")
+uv1_scale = Vector3(3, 2, 1)
+texture_filter = 4
+
+[resource]
+material = SubResource("StandardMaterial3D_21t2j")

@@ -1,0 +1,13 @@
+[gd_resource type="BoxMesh" load_steps=3 format=3 uid="uid://bvukycean8l1a"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1rxcy"]
+load_path = "res://.godot/imported/smooth_stone.png-25b4927fbf277bbc99659c6de9d3c49f.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_15dpn"]
+albedo_color = Color(0.498039, 1, 0.498039, 1)
+albedo_texture = SubResource("CompressedTexture2D_1rxcy")
+uv1_scale = Vector3(3, 2, 1)
+texture_filter = 4
+
+[resource]
+material = SubResource("StandardMaterial3D_15dpn")
