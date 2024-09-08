@@ -32,26 +32,31 @@ func update_everything():
 	self_viewport.mesh_lod_threshold = player_camera.get_viewport().mesh_lod_threshold
 	
 	var world_3d = get_viewport().world_3d
-	self_camera.environment = world_3d.environment.duplicate()
-	self_camera.environment.tonemap_mode = Environment.TONE_MAPPER_LINEAR	
+	# self_camera.environment = world_3d.environment.duplicate()
+	# self_camera.environment.tonemap_mode = Environment.TONE_MAPPER_LINEAR	
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if (not body.is_class("StaticBody3D") or body.is_class("AnimatableBody3D")) and not body.is_class("CSGShape3D"):
 		var local_pos = global_transform.affine_inverse() * body.global_transform.origin
-		var previous_object_z = _nonzero_sign(local_pos.z)
-		var current_object_z = _nonzero_sign(local_pos.z)
-		# print("Body entered: ", body.name)
-		tracked_objects.append([body, previous_object_z, current_object_z])
+		tracked_objects.append([body, _nonzero_sign(local_pos.z), _nonzero_sign(local_pos.z)])
 
 func _on_area_3d_body_exited(body: Node3D) -> void:
 	for object in tracked_objects:
 		if object[0] == body:
 			tracked_objects.erase(object)
 
+func track_objects_pass():
+	for object in tracked_objects:
+		var local_pos = global_transform.affine_inverse() * object[0].global_transform.origin
+		object[2] = _nonzero_sign(local_pos.z)
+		if object[1] != object[2]:
+			move_to_other_portal(object)
+		object[1] = object[2]
+
 func move_to_other_portal(object: Array):
 	var body = object[0]
 	var offset = body.global_transform.origin - global_transform.origin
-	if body.name == "CharacterBody3D":
+	if body.name == "Player":
 		var camera_offset = player_camera.global_transform.origin - global_transform.origin
 		self_camera.global_transform.origin = connected_portal.global_transform.origin + (connected_portal.global_transform.origin + camera_offset - global_transform.origin)
 		self_camera.global_transform.basis = player_camera.global_transform.basis
@@ -59,17 +64,6 @@ func move_to_other_portal(object: Array):
 	
 	tracked_objects.erase(object)
 	connected_portal.tracked_objects.erase(object)
-	# print("Object teleported: ", object)
-
-func track_objects_pass():
-	for object in tracked_objects:
-		var local_pos = global_transform.affine_inverse() * object[0].global_transform.origin
-		object[2] = _nonzero_sign(local_pos.z)
-		if object[1] != object[2]:
-			# print(object[1], "<->", object[2])
-			# print(object[0].name, ": Object has crossed the plane!")
-			move_to_other_portal(object)
-		object[1] = object[2]
 
 func _nonzero_sign(value):
 	var s = sign(value)
