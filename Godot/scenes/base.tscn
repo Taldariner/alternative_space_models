@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dvlgldtqxd7sr"]
+[gd_scene load_steps=35 format=3 uid="uid://dvlgldtqxd7sr"]
 
 [ext_resource type="Environment" uid="uid://dme2e6mo1fhnp" path="res://scenes/environment.tres" id="1_muboy"]
 [ext_resource type="Texture2D" uid="uid://cimed4exlgyt8" path="res://assets/smooth_stone.png" id="2_6durf"]
@@ -6,6 +6,8 @@
 [ext_resource type="MeshLibrary" uid="uid://phugjfmjicvw" path="res://scenes/mesh_library.tres" id="2_qqjk1"]
 [ext_resource type="PackedScene" uid="uid://q85jmmsrfwt" path="res://scenes/portal.tscn" id="3_fuclf"]
 [ext_resource type="Texture2D" uid="uid://dqxdx1kdpkf1c" path="res://assets/oak_leaves.png" id="4_ir6ba"]
+[ext_resource type="PackedScene" uid="uid://d3cw2occ12if6" path="res://scenes/water_plane.tscn" id="5_af7a5"]
+[ext_resource type="Shader" path="res://water_surface.gdshader" id="6_pesvt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ew07v"]
 size = Vector3(32, 1, 32)
@@ -53,6 +55,165 @@ texture_filter = 4
 [sub_resource type="BoxMesh" id="BoxMesh_7a50a"]
 material = SubResource("StandardMaterial3D_tjdge")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q8pd0"]
+noise_type = 0
+fractal_type = 2
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jn4iw"]
+noise = SubResource("FastNoiseLite_q8pd0")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_coxku"]
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6rwny"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_coxku")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qepac"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_pesvt")
+shader_parameter/uv_scale = 0.5
+shader_parameter/water_color = Color(0.0980392, 0.294118, 0.490196, 1)
+shader_parameter/time_scale = 1.0
+shader_parameter/alpha = 0.75
+shader_parameter/normal_scale = 0.5
+shader_parameter/roughness_scale = 0.25
+shader_parameter/color_ratio = 0.5
+shader_parameter/refraction_strength = 0.05
+shader_parameter/aberration_r = Vector2(0.002, 0)
+shader_parameter/aberration_g = Vector2(0, 0.002)
+shader_parameter/aberration_b = Vector2(-0.002, 0)
+shader_parameter/highlights_time_scale = -0.02
+shader_parameter/wave_amplitude = 0.1
+shader_parameter/wave_frequency = 1.0
+shader_parameter/water_normal_noise = SubResource("NoiseTexture2D_6rwny")
+shader_parameter/sun_highlights = SubResource("NoiseTexture2D_jn4iw")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_g2fbr"]
+noise_type = 0
+fractal_type = 2
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jo4fu"]
+seamless = true
+noise = SubResource("FastNoiseLite_g2fbr")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ocyf6"]
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w0n4v"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_ocyf6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4idxq"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_pesvt")
+shader_parameter/uv_scale = 0.25
+shader_parameter/water_color = Color(0.0980392, 0.294118, 0.490196, 1)
+shader_parameter/time_scale = 1.0
+shader_parameter/alpha = 0.75
+shader_parameter/normal_scale = 1.0
+shader_parameter/roughness_scale = 0.25
+shader_parameter/color_ratio = 0.5
+shader_parameter/refraction_strength = 0.2
+shader_parameter/aberration_r = Vector2(0.002, 0)
+shader_parameter/aberration_g = Vector2(0, 0.002)
+shader_parameter/aberration_b = Vector2(-0.002, 0)
+shader_parameter/highlights_time_scale = -0.02
+shader_parameter/wave_amplitude = 0.1
+shader_parameter/wave_frequency = 1.0
+shader_parameter/water_normal_noise = SubResource("NoiseTexture2D_w0n4v")
+shader_parameter/sun_highlights = SubResource("NoiseTexture2D_jo4fu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p32ms"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_pesvt")
+shader_parameter/uv_scale = 0.25
+shader_parameter/water_color = Color(0.0980392, 0.294118, 0.490196, 1)
+shader_parameter/time_scale = 1.0
+shader_parameter/alpha = 0.75
+shader_parameter/normal_scale = 1.0
+shader_parameter/roughness_scale = 0.25
+shader_parameter/color_ratio = 0.5
+shader_parameter/refraction_strength = 0.2
+shader_parameter/aberration_r = Vector2(0.002, 0)
+shader_parameter/aberration_g = Vector2(0, 0.002)
+shader_parameter/aberration_b = Vector2(-0.002, 0)
+shader_parameter/highlights_time_scale = -0.02
+shader_parameter/wave_amplitude = 0.1
+shader_parameter/wave_frequency = 1.0
+shader_parameter/water_normal_noise = SubResource("NoiseTexture2D_w0n4v")
+shader_parameter/sun_highlights = SubResource("NoiseTexture2D_jo4fu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_52qlt"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_pesvt")
+shader_parameter/uv_scale = 0.25
+shader_parameter/water_color = Color(0.0980392, 0.294118, 0.490196, 1)
+shader_parameter/time_scale = 1.0
+shader_parameter/alpha = 0.75
+shader_parameter/normal_scale = 1.0
+shader_parameter/roughness_scale = 0.25
+shader_parameter/color_ratio = 0.5
+shader_parameter/refraction_strength = 0.2
+shader_parameter/aberration_r = Vector2(0.002, 0)
+shader_parameter/aberration_g = Vector2(0, 0.002)
+shader_parameter/aberration_b = Vector2(-0.002, 0)
+shader_parameter/highlights_time_scale = -0.02
+shader_parameter/wave_amplitude = 0.1
+shader_parameter/wave_frequency = 1.0
+shader_parameter/water_normal_noise = SubResource("NoiseTexture2D_w0n4v")
+shader_parameter/sun_highlights = SubResource("NoiseTexture2D_jo4fu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ly050"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_pesvt")
+shader_parameter/uv_scale = 0.25
+shader_parameter/water_color = Color(0.0980392, 0.294118, 0.490196, 1)
+shader_parameter/time_scale = 1.0
+shader_parameter/alpha = 0.75
+shader_parameter/normal_scale = 1.0
+shader_parameter/roughness_scale = 0.25
+shader_parameter/color_ratio = 0.5
+shader_parameter/refraction_strength = 0.2
+shader_parameter/aberration_r = Vector2(0.002, 0)
+shader_parameter/aberration_g = Vector2(0, 0.002)
+shader_parameter/aberration_b = Vector2(-0.002, 0)
+shader_parameter/highlights_time_scale = -0.02
+shader_parameter/wave_amplitude = 0.1
+shader_parameter/wave_frequency = 1.0
+shader_parameter/water_normal_noise = SubResource("NoiseTexture2D_w0n4v")
+shader_parameter/sun_highlights = SubResource("NoiseTexture2D_jo4fu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y1smx"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_pesvt")
+shader_parameter/uv_scale = 0.25
+shader_parameter/water_color = Color(0.0980392, 0.294118, 0.490196, 1)
+shader_parameter/time_scale = 1.0
+shader_parameter/alpha = 0.75
+shader_parameter/normal_scale = 1.0
+shader_parameter/roughness_scale = 0.25
+shader_parameter/color_ratio = 0.5
+shader_parameter/refraction_strength = 0.2
+shader_parameter/aberration_r = Vector2(0.002, 0)
+shader_parameter/aberration_g = Vector2(0, 0.002)
+shader_parameter/aberration_b = Vector2(-0.002, 0)
+shader_parameter/highlights_time_scale = -0.02
+shader_parameter/wave_amplitude = 0.1
+shader_parameter/wave_frequency = 1.0
+shader_parameter/water_normal_noise = SubResource("NoiseTexture2D_w0n4v")
+shader_parameter/sun_highlights = SubResource("NoiseTexture2D_jo4fu")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_txfwx"]
 size = Vector3(1, 2, 1)
 
@@ -79,50 +240,17 @@ func _process(delta: float) -> void:
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_muboy")
 
-[node name="SpotLight3D" type="SpotLight3D" parent="WorldEnvironment"]
-transform = Transform3D(0.866025, 0.353553, 0.353554, -6.18172e-08, -0.707107, 0.707107, 0.5, -0.612372, -0.612373, 5, 15, -10)
-visible = false
-light_color = Color(1, 0.784314, 0.784314, 1)
-light_energy = 10.0
-light_bake_mode = 1
-shadow_enabled = true
-shadow_reverse_cull_face = true
-distance_fade_enabled = true
-spot_range = 50.0
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(-0.853553, 0.146447, 0.5, 0.5, 0.5, 0.707107, -0.146447, 0.853553, -0.5, 10, 10, -10)
-visible = false
-light_color = Color(1, 1, 0.784314, 1)
-light_bake_mode = 1
-light_cull_mask = 4294967293
-shadow_reverse_cull_face = true
-directional_shadow_mode = 0
-directional_shadow_blend_splits = true
-directional_shadow_pancake_size = 3.5
-sky_mode = 1
-
 [node name="OmniLight3D" type="OmniLight3D" parent="WorldEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 12, 12)
+visible = false
 light_energy = 2.5
 shadow_enabled = true
 omni_range = 50.0
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 11.5, 12)
-visible = false
-omni_range = 25.0
-
-[node name="OmniLight3D3" type="OmniLight3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5, 11.5, -12)
-visible = false
-omni_range = 25.0
-
-[node name="OmniLight3D4" type="OmniLight3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 11.5, 11.5)
-visible = false
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, -16, 16, 16)
 shadow_enabled = true
-omni_range = 25.0
+directional_shadow_mode = 0
 
 [node name="Map" type="StaticBody3D" parent="."]
 
@@ -230,6 +358,41 @@ data = {
 "cells": PackedInt32Array(65520, 15, 0, 65521, 15, 0, 65522, 15, 0, 65523, 15, 0, 65524, 15, 0, 65525, 15, 0, 65526, 15, 0, 65526, 14, 0, 65526, 13, 0, 65526, 12, 0, 65526, 11, 0, 65526, 10, 0, 65526, 9, 0, 65525, 9, 0, 65524, 9, 0, 65523, 9, 0, 65522, 9, 0, 65521, 9, 0, 65520, 9, 0, 65520, 10, 0, 65520, 11, 0, 65520, 12, 0, 65520, 13, 0, 65520, 14, 0, 131056, 15, 0, 131057, 15, 0, 131058, 15, 0, 131059, 15, 0, 131060, 15, 0, 131061, 15, 0, 131062, 15, 0, 131062, 9, 0, 131062, 10, 0, 131062, 11, 0, 131062, 12, 0, 131062, 13, 0, 131062, 14, 0, 131061, 9, 0, 131060, 9, 0, 131059, 9, 0, 131058, 9, 0, 131057, 9, 0, 131056, 9, 0, 131056, 10, 0, 131056, 11, 0, 131056, 12, 0, 131056, 13, 0, 131056, 14, 0)
 }
 metadata/_editor_floor_ = Vector3(0, 1, 0)
+
+[node name="Water" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 1.5, 12.5)
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("ShaderMaterial_qepac")
+
+[node name="Node3D4" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, 2.5)
+visible = false
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("ShaderMaterial_4idxq")
+
+[node name="Node3D5" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, -2.5)
+visible = false
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("ShaderMaterial_p32ms")
+
+[node name="Node3D6" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, -2.5)
+visible = false
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("ShaderMaterial_52qlt")
+
+[node name="Node3D7" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, 2.5)
+visible = false
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("ShaderMaterial_ly050")
+
+[node name="Node3D8" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, 2.5)
+visible = false
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("ShaderMaterial_y1smx")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10)
