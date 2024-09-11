@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dvlgldtqxd7sr"]
+[gd_scene load_steps=37 format=3 uid="uid://dvlgldtqxd7sr"]
 
 [ext_resource type="Environment" uid="uid://dme2e6mo1fhnp" path="res://scenes/environment.tres" id="1_muboy"]
 [ext_resource type="Texture2D" uid="uid://cimed4exlgyt8" path="res://assets/smooth_stone.png" id="2_6durf"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dqxdx1kdpkf1c" path="res://assets/oak_leaves.png" id="4_ir6ba"]
 [ext_resource type="PackedScene" uid="uid://d3cw2occ12if6" path="res://scenes/water_plane.tscn" id="5_af7a5"]
 [ext_resource type="Shader" path="res://water_surface.gdshader" id="6_pesvt"]
+[ext_resource type="Script" path="res://objects/droplet_spawner.gd" id="7_vkgd1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ew07v"]
 size = Vector3(32, 1, 32)
@@ -214,6 +215,9 @@ shader_parameter/wave_frequency = 1.0
 shader_parameter/water_normal_noise = SubResource("NoiseTexture2D_w0n4v")
 shader_parameter/sun_highlights = SubResource("NoiseTexture2D_jo4fu")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_k262g"]
+size = Vector3(5, 1, 5)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_txfwx"]
 size = Vector3(1, 2, 1)
 
@@ -351,48 +355,59 @@ visible = false
 mesh = SubResource("BoxMesh_7a50a")
 skeleton = NodePath("../..")
 
-[node name="Pool" type="GridMap" parent="Map"]
+[node name="Pools" type="GridMap" parent="Map"]
 mesh_library = ExtResource("2_qqjk1")
 cell_size = Vector3(1, 1, 1)
 data = {
-"cells": PackedInt32Array(65520, 15, 0, 65521, 15, 0, 65522, 15, 0, 65523, 15, 0, 65524, 15, 0, 65525, 15, 0, 65526, 15, 0, 65526, 14, 0, 65526, 13, 0, 65526, 12, 0, 65526, 11, 0, 65526, 10, 0, 65526, 9, 0, 65525, 9, 0, 65524, 9, 0, 65523, 9, 0, 65522, 9, 0, 65521, 9, 0, 65520, 9, 0, 65520, 10, 0, 65520, 11, 0, 65520, 12, 0, 65520, 13, 0, 65520, 14, 0, 131056, 15, 0, 131057, 15, 0, 131058, 15, 0, 131059, 15, 0, 131060, 15, 0, 131061, 15, 0, 131062, 15, 0, 131062, 9, 0, 131062, 10, 0, 131062, 11, 0, 131062, 12, 0, 131062, 13, 0, 131062, 14, 0, 131061, 9, 0, 131060, 9, 0, 131059, 9, 0, 131058, 9, 0, 131057, 9, 0, 131056, 9, 0, 131056, 10, 0, 131056, 11, 0, 131056, 12, 0, 131056, 13, 0, 131056, 14, 0)
+"cells": PackedInt32Array(65520, 15, 0, 65521, 15, 0, 65522, 15, 0, 65523, 15, 0, 65524, 15, 0, 65525, 15, 0, 65526, 15, 0, 65526, 14, 0, 65526, 13, 0, 65526, 12, 0, 65526, 11, 0, 65526, 10, 0, 65526, 9, 0, 65525, 9, 0, 65524, 9, 0, 65523, 9, 0, 65522, 9, 0, 65521, 9, 0, 65520, 9, 0, 65520, 10, 0, 65520, 11, 0, 65520, 12, 0, 65520, 13, 0, 65520, 14, 0, 131056, 15, 0, 131057, 15, 0, 131058, 15, 0, 131059, 15, 0, 131060, 15, 0, 131061, 15, 0, 131062, 15, 0, 131062, 9, 0, 131062, 10, 0, 131062, 11, 0, 131062, 12, 0, 131062, 13, 0, 131062, 14, 0, 131061, 9, 0, 131060, 9, 0, 131059, 9, 0, 131058, 9, 0, 131057, 9, 0, 131056, 9, 0, 131056, 10, 0, 131056, 11, 0, 131056, 12, 0, 131056, 13, 0, 131056, 14, 0, 15, 15, 1, 14, 15, 1, 13, 15, 1, 12, 15, 1, 11, 15, 1, 10, 15, 1, 9, 15, 1, 9, 14, 1, 9, 13, 1, 9, 12, 1, 9, 11, 1, 9, 10, 1, 9, 9, 1, 10, 9, 1, 11, 9, 1, 12, 9, 1, 13, 9, 1, 14, 9, 1, 15, 9, 1, 15, 10, 1, 15, 11, 1, 15, 12, 1, 15, 13, 1, 15, 14, 1, 65551, 9, 1, 65550, 9, 1, 65549, 9, 1, 65548, 9, 1, 65547, 9, 1, 65546, 9, 1, 65545, 9, 1, 65545, 10, 1, 65545, 11, 1, 65545, 12, 1, 65545, 13, 1, 65545, 14, 1, 65545, 15, 1, 65546, 15, 1, 65547, 15, 1, 65548, 15, 1, 65549, 15, 1, 65550, 15, 1, 65551, 15, 1, 65551, 14, 1, 65551, 13, 1, 65551, 12, 1, 65551, 11, 1, 65551, 10, 1)
 }
 metadata/_editor_floor_ = Vector3(0, 1, 0)
 
-[node name="Water" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+[node name="Water" parent="Map/Pools" instance=ExtResource("5_af7a5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 1.5, 12.5)
+visible = false
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("ShaderMaterial_qepac")
 
-[node name="Node3D4" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+[node name="Node3D4" parent="Map/Pools" instance=ExtResource("5_af7a5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, 2.5)
 visible = false
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("ShaderMaterial_4idxq")
 
-[node name="Node3D5" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+[node name="Node3D5" parent="Map/Pools" instance=ExtResource("5_af7a5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, -2.5)
 visible = false
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("ShaderMaterial_p32ms")
 
-[node name="Node3D6" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+[node name="Node3D6" parent="Map/Pools" instance=ExtResource("5_af7a5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, -2.5)
 visible = false
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("ShaderMaterial_52qlt")
 
-[node name="Node3D7" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+[node name="Node3D7" parent="Map/Pools" instance=ExtResource("5_af7a5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, 2.5)
 visible = false
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("ShaderMaterial_ly050")
 
-[node name="Node3D8" parent="Map/Pool" instance=ExtResource("5_af7a5")]
+[node name="Node3D8" parent="Map/Pools" instance=ExtResource("5_af7a5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, 2.5)
 visible = false
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("ShaderMaterial_y1smx")
+
+[node name="DropletSpawner" type="Node3D" parent="Map/Pools"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 7, 12.5)
+script = ExtResource("7_vkgd1")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Map/Pools"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 12.5, 3, 12.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Pools/StaticBody3D"]
+shape = SubResource("BoxShape3D_k262g")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10)
