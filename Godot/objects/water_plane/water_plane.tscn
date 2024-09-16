@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d3cw2occ12if6"]
 
-[ext_resource type="Material" uid="uid://dmnglg8aqw14o" path="res://objects/water_plane_shader.tres" id="1_0ep7y"]
+[ext_resource type="Material" uid="uid://dmnglg8aqw14o" path="res://objects/water_plane/water_plane_material.tres" id="1_0ep7y"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ks0o3"]
 size = Vector2(5, 5)

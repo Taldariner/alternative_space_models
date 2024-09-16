@@ -1,14 +1,14 @@
-[gd_scene load_steps=37 format=3 uid="uid://dvlgldtqxd7sr"]
+[gd_scene load_steps=35 format=3 uid="uid://dvlgldtqxd7sr"]
 
 [ext_resource type="Environment" uid="uid://dme2e6mo1fhnp" path="res://scenes/environment.tres" id="1_muboy"]
 [ext_resource type="Texture2D" uid="uid://cimed4exlgyt8" path="res://assets/smooth_stone.png" id="2_6durf"]
-[ext_resource type="Script" path="res://scenes/character_body_3d.gd" id="2_j0dd0"]
 [ext_resource type="MeshLibrary" uid="uid://phugjfmjicvw" path="res://scenes/mesh_library.tres" id="2_qqjk1"]
-[ext_resource type="PackedScene" uid="uid://q85jmmsrfwt" path="res://scenes/portal.tscn" id="3_fuclf"]
+[ext_resource type="PackedScene" uid="uid://q85jmmsrfwt" path="res://objects/portal/portal.tscn" id="3_fuclf"]
 [ext_resource type="Texture2D" uid="uid://dqxdx1kdpkf1c" path="res://assets/oak_leaves.png" id="4_ir6ba"]
-[ext_resource type="PackedScene" uid="uid://d3cw2occ12if6" path="res://scenes/water_plane.tscn" id="5_af7a5"]
-[ext_resource type="Shader" path="res://water_surface.gdshader" id="6_pesvt"]
-[ext_resource type="Script" path="res://objects/droplet_spawner.gd" id="7_vkgd1"]
+[ext_resource type="PackedScene" uid="uid://d3cw2occ12if6" path="res://objects/water_plane/water_plane.tscn" id="5_af7a5"]
+[ext_resource type="Shader" path="res://objects/water_plane/water_plane.gdshader" id="6_pesvt"]
+[ext_resource type="Script" path="res://objects/water_droplet/droplet_spawner.gd" id="7_vkgd1"]
+[ext_resource type="PackedScene" uid="uid://cd2thsvexrnkc" path="res://objects/player/player.tscn" id="8_siny0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ew07v"]
 size = Vector3(32, 1, 32)
@@ -218,12 +218,6 @@ shader_parameter/sun_highlights = SubResource("NoiseTexture2D_jo4fu")
 [sub_resource type="BoxShape3D" id="BoxShape3D_k262g"]
 size = Vector3(5, 1, 5)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_txfwx"]
-size = Vector3(1, 2, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_gcsxu"]
-size = Vector3(1, 2, 1)
-
 [sub_resource type="GDScript" id="GDScript_bpmao"]
 script/source = "extends Label
 
@@ -239,7 +233,7 @@ func _process(delta: float) -> void:
 	text = str(fps)
 "
 
-[node name="Node3D" type="Node3D"]
+[node name="Base" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_muboy")
@@ -409,25 +403,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Pools/StaticBody3D"]
 shape = SubResource("BoxShape3D_k262g")
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10)
-script = ExtResource("2_j0dd0")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-shape = SubResource("BoxShape3D_txfwx")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
-mesh = SubResource("BoxMesh_gcsxu")
-
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-environment = ExtResource("1_muboy")
-current = true
-fov = 55.0
-near = 0.001
-
-[node name="Marker3D" type="Marker3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.75, -0.75)
+[node name="CharacterBody3D" parent="." instance=ExtResource("8_siny0")]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 10, 10, 10)
@@ -441,14 +417,10 @@ offset_bottom = 45.0
 theme_override_font_sizes/font_size = 32
 script = SubResource("GDScript_bpmao")
 
-[node name="Portal1" parent="." node_paths=PackedStringArray("connected_portal", "player", "player_camera") instance=ExtResource("3_fuclf")]
+[node name="Portal1" parent="." node_paths=PackedStringArray("connected_portal") instance=ExtResource("3_fuclf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, 0)
 connected_portal = NodePath("../Portal2")
-player = NodePath("../CharacterBody3D")
-player_camera = NodePath("../CharacterBody3D/Camera3D")
 
-[node name="Portal2" parent="." node_paths=PackedStringArray("connected_portal", "player", "player_camera") instance=ExtResource("3_fuclf")]
+[node name="Portal2" parent="." node_paths=PackedStringArray("connected_portal") instance=ExtResource("3_fuclf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0)
 connected_portal = NodePath("../Portal1")
-player = NodePath("../CharacterBody3D")
-player_camera = NodePath("../CharacterBody3D/Camera3D")

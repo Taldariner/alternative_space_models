@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cd2thsvexrnkc"]
+
+[ext_resource type="Script" path="res://objects/player/player.gd" id="1_052ps"]
+[ext_resource type="Environment" uid="uid://dme2e6mo1fhnp" path="res://scenes/environment.tres" id="2_sxaxk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_txfwx"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gcsxu"]
+size = Vector3(1, 2, 1)
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10)
+script = ExtResource("1_052ps")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_txfwx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_gcsxu")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+environment = ExtResource("2_sxaxk")
+current = true
+fov = 55.0
+near = 0.001
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.75, -0.75)

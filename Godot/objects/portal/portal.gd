@@ -2,8 +2,8 @@ extends StaticBody3D
 
 @export var connected_portal: StaticBody3D
 @export var player: CharacterBody3D
-@export var player_camera: Camera3D
 
+@onready var player_camera: Camera3D = player.camera
 @onready var self_camera: Camera3D = $PortalSurface/SubViewport/PortalCamera
 @onready var self_viewport: SubViewport = $PortalSurface/SubViewport
 

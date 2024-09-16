@@ -1,12 +1,28 @@
 [gd_scene load_steps=13 format=3 uid="uid://rvv22slrldvy"]
 
-[ext_resource type="BoxMesh" uid="uid://bvukycean8l1a" path="res://scenes/cube_stone_green.tres" id="1_jxhhn"]
-[ext_resource type="BoxMesh" uid="uid://d10dp04muorb" path="res://scenes/cube_stone_red.tres" id="2_kvmd7"]
+[ext_resource type="Texture2D" uid="uid://cimed4exlgyt8" path="res://assets/smooth_stone.png" id="2_vlny7"]
 [ext_resource type="Texture2D" uid="uid://m2j5wijlvuyp" path="res://assets/obsidian.png" id="3_k2mxc"]
 [ext_resource type="Texture2D" uid="uid://dqxdx1kdpkf1c" path="res://assets/oak_leaves.png" id="4_6mw21"]
-[ext_resource type="Shader" path="res://water.gdshader" id="5_w7u3t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bcdwu"]
+albedo_color = Color(0.498039, 1, 0.498039, 1)
+albedo_texture = ExtResource("2_vlny7")
+uv1_scale = Vector3(3, 2, 1)
+texture_filter = 4
+
+[sub_resource type="BoxMesh" id="BoxMesh_fqcws"]
+material = SubResource("StandardMaterial3D_bcdwu")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0rk6v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4wikv"]
+albedo_color = Color(1, 0.498039, 0.498039, 1)
+albedo_texture = ExtResource("2_vlny7")
+uv1_scale = Vector3(3, 2, 1)
+texture_filter = 4
+
+[sub_resource type="BoxMesh" id="BoxMesh_tc1ln"]
+material = SubResource("StandardMaterial3D_4wikv")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_07fuv"]
 albedo_texture = ExtResource("3_k2mxc")
@@ -27,35 +43,11 @@ texture_filter = 4
 [sub_resource type="BoxMesh" id="BoxMesh_vyilx"]
 material = SubResource("StandardMaterial3D_qd2bc")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yphpf"]
-render_priority = 0
-shader = ExtResource("5_w7u3t")
-shader_parameter/WATER_COL = Color(0.04, 0.38, 0.88, 1)
-shader_parameter/WATER2_COL = Color(0.04, 0.35, 0.78, 1)
-shader_parameter/FOAM_COL = Color(0.8125, 0.9609, 0.9648, 1)
-shader_parameter/distortion_speed = 2.0
-shader_parameter/tile = Vector2(5, 5)
-shader_parameter/wave_speed = 0.015
-shader_parameter/wave_amplitude = 0.5
-shader_parameter/wave_frequency = 1.5
-shader_parameter/time_offset = 0.0
-shader_parameter/water_size = Vector2(128, 128)
-shader_parameter/water_transparency = 0.8
-shader_parameter/water_depth_factor = 0.1
-shader_parameter/foam_width = 0.5
-shader_parameter/foam_edge_softness = 0.05
-shader_parameter/foam_smoothness = 0.03
-shader_parameter/foam_distortion_speed = 0.5
-shader_parameter/foam_distortion_amount = 0.1
-
-[sub_resource type="BoxMesh" id="BoxMesh_tqxep"]
-material = SubResource("ShaderMaterial_yphpf")
-
 [node name="MeshLibrary" type="Node3D"]
 
 [node name="StoneGreen" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
-mesh = ExtResource("1_jxhhn")
+mesh = SubResource("BoxMesh_fqcws")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="StoneGreen"]
 
@@ -64,7 +56,7 @@ shape = SubResource("BoxShape3D_0rk6v")
 
 [node name="StoneRed" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
-mesh = ExtResource("2_kvmd7")
+mesh = SubResource("BoxMesh_tc1ln")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="StoneRed"]
 
@@ -87,13 +79,4 @@ mesh = SubResource("BoxMesh_vyilx")
 [node name="StaticBody3D" type="StaticBody3D" parent="Leaves"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Leaves/StaticBody3D"]
-shape = SubResource("BoxShape3D_0rk6v")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
-mesh = SubResource("BoxMesh_tqxep")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_0rk6v")
