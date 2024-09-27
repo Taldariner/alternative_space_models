@@ -9,7 +9,7 @@ size = Vector3(1, 2, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_gcsxu"]
 size = Vector3(1, 2, 1)
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10)
 script = ExtResource("1_052ps")
 
@@ -21,8 +21,8 @@ mesh = SubResource("BoxMesh_gcsxu")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+visible = false
 environment = ExtResource("2_sxaxk")
-current = true
 fov = 55.0
 near = 0.001
 

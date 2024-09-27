@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh0mnx6d2m3q4"]
+
+[ext_resource type="Script" path="res://objects/water_droplet/water_system.gd" id="1_aycrk"]
+
+[node name="WaterSystem" type="Node3D"]
+script = ExtResource("1_aycrk")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, -0.3, 0)
+collision_mask = 255
+collide_with_areas = true

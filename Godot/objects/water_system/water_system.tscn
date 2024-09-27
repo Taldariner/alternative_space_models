@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://di81ma53k44kt"]
+
+[ext_resource type="Script" path="res://objects/water_system/water_system.gd" id="1_pn68o"]
+
+[node name="WaterSystem" type="Node3D"]
+script = ExtResource("1_pn68o")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]

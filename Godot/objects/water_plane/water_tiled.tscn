@@ -1,0 +1,143 @@
+[gd_scene load_steps=8 format=3 uid="uid://d1fmwtwllxwq3"]
+
+[ext_resource type="PackedScene" uid="uid://d3cw2occ12if6" path="res://objects/water_plane/water_plane.tscn" id="1_q7gqo"]
+[ext_resource type="Shader" path="res://objects/water_plane/water_plane.gdshader" id="2_ob1mp"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_g2fbr"]
+noise_type = 0
+fractal_type = 2
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jo4fu"]
+seamless = true
+noise = SubResource("FastNoiseLite_g2fbr")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ocyf6"]
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w0n4v"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_ocyf6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rkrcr"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_ob1mp")
+shader_parameter/water_color = Color(0.0980392, 0.294118, 0.490196, 1)
+shader_parameter/aberration_r = Vector2(0.002, 0)
+shader_parameter/aberration_g = Vector2(0, 0.002)
+shader_parameter/aberration_b = Vector2(-0.002, 0)
+shader_parameter/uv_scale = 1.0
+shader_parameter/time_scale = 1.0
+shader_parameter/alpha = 0.75
+shader_parameter/normal_scale = 0.5
+shader_parameter/roughness_scale = 0.25
+shader_parameter/color_ratio = 0.5
+shader_parameter/refraction_strength = 0.25
+shader_parameter/highlights_time_scale = -0.02
+shader_parameter/wave_amplitude = 0.05
+shader_parameter/wave_frequency = 1.0
+shader_parameter/water_normal_noise = SubResource("NoiseTexture2D_w0n4v")
+shader_parameter/sun_highlights = SubResource("NoiseTexture2D_jo4fu")
+
+[node name="WaterTiled" type="Node3D"]
+
+[node name="Node3D" parent="." instance=ExtResource("1_q7gqo")]
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D2" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D3" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D4" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D5" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D6" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D7" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D8" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -2)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D9" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D10" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D11" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D12" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D13" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D14" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D15" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D16" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 1)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D17" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D18" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D19" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D20" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D21" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D22" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D23" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D24" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 2)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")
+
+[node name="Node3D25" parent="." instance=ExtResource("1_q7gqo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+surface_material_override/0 = SubResource("ShaderMaterial_rkrcr")

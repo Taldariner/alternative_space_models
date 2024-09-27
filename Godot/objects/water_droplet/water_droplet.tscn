@@ -1,20 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgn8o27x34rvi"]
+[gd_scene load_steps=3 format=3 uid="uid://bgn8o27x34rvi"]
 
-[ext_resource type="Material" uid="uid://bg7tiuuw8jgkt" path="res://objects/water_droplet/water_droplet_shader.tres" id="1_bbifa"]
+[ext_resource type="Script" path="res://objects/water_droplet/water_droplet.gd" id="1_wber8"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_mhnke"]
-radius = 0.06
-height = 0.12
+[sub_resource type="SphereMesh" id="SphereMesh_a01ce"]
+radius = 0.1
+height = 0.2
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_bv4qp"]
-radius = 0.04
-
-[node name="Droplet" type="RigidBody3D"]
-mass = 0.01
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_mhnke")
-surface_material_override/0 = ExtResource("1_bbifa")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_bv4qp")
+[node name="Droplet" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_a01ce")
+script = ExtResource("1_wber8")

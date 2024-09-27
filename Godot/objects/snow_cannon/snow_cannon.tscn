@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cinq05mjv7k83"]
+
+[ext_resource type="Script" path="res://objects/snow_cannon/snow_cannon.gd" id="1_rhpav"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ddyjr"]
+size = Vector3(1, 2, 1)
+
+[node name="SnowCannon" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 2, 13.5)
+mesh = SubResource("BoxMesh_ddyjr")
+script = ExtResource("1_rhpav")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
