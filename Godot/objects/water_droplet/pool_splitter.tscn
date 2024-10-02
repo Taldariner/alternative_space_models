@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://daly4f7osx78r"]
+
+[sub_resource type="GDScript" id="GDScript_fshn2"]
+script/source = "extends StaticBody3D
+
+
+func _input(event):
+    if event.is_action_pressed(\"ui_interact\"):
+        global_position.y += 4.0
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5unvu"]
+size = Vector3(4, 2, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_80u6o"]
+size = Vector3(4, 2, 0.5)
+
+[node name="PoolSplitter02" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = SubResource("GDScript_fshn2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_5unvu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("BoxMesh_80u6o")

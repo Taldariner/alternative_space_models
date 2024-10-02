@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c7oy838jwb6eg"]
+[gd_scene load_steps=11 format=3 uid="uid://c7oy838jwb6eg"]
 
 [ext_resource type="Environment" uid="uid://dme2e6mo1fhnp" path="res://scenes/environment.tres" id="1_bvn35"]
 [ext_resource type="MeshLibrary" uid="uid://phugjfmjicvw" path="res://scenes/mesh_library.tres" id="2_6utvy"]
@@ -7,22 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://b3s80wu2cbn7t" path="res://objects/water_droplet/pool.tscn" id="6_epvex"]
 [ext_resource type="PackedScene" uid="uid://bh0mnx6d2m3q4" path="res://objects/water_droplet/water_system.tscn" id="6_grppx"]
 [ext_resource type="Script" path="res://scenes/camera.gd" id="7_5i5nm"]
+[ext_resource type="PackedScene" uid="uid://daly4f7osx78r" path="res://objects/water_droplet/pool_splitter.tscn" id="7_72qob"]
 [ext_resource type="Script" path="res://objects/water_droplet/droplet_spawner.gd" id="7_kusvv"]
-
-[sub_resource type="GDScript" id="GDScript_fshn2"]
-script/source = "extends StaticBody3D
-
-
-func _input(event):
-    if event.is_action_pressed(\"ui_interact\"):
-        global_position.y += 4.0
-"
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_5unvu"]
-size = Vector3(4, 2, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_80u6o"]
-size = Vector3(4, 2, 0.5)
 
 [sub_resource type="GDScript" id="GDScript_bpmao"]
 script/source = "extends Label
@@ -85,31 +71,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 3, 0)
 connected_portal = NodePath("../Portal01")
 player_camera = NodePath("../Player/Camera3D2")
 
-[node name="WaterSystem2" parent="Objects" instance=ExtResource("6_grppx")]
+[node name="WaterSystem01" parent="Objects" instance=ExtResource("6_grppx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 9)
 visible = false
 
-[node name="DropletSpawner" type="Node3D" parent="Objects" node_paths=PackedStringArray("camera")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 6, 3)
+[node name="Pool01" parent="Objects" instance=ExtResource("6_epvex")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0.55, 0)
+
+[node name="PoolSplitter01" parent="Objects/Pool01" instance=ExtResource("7_72qob")]
+
+[node name="DropletSpawner01" type="Node3D" parent="Objects/Pool01" node_paths=PackedStringArray("camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.45, -1)
 script = ExtResource("7_kusvv")
-camera = NodePath("../Player/Camera3D2")
+camera = NodePath("../../Player/Camera3D2")
 
-[node name="Node3D" parent="Objects" instance=ExtResource("6_epvex")]
-transform = Transform3D(0.5, 0, 0, 0, 0.965926, 0.517638, 0, -0.258819, 1.93185, 8.5, 1.55, 2)
+[node name="Pool02" parent="Objects" instance=ExtResource("6_epvex")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0.55, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Objects/Node3D"]
-transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0.965926, 0.12941)
-script = SubResource("GDScript_fshn2")
+[node name="DropletSpawner02" type="Node3D" parent="Objects/Pool02" node_paths=PackedStringArray("camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.45, 1)
+script = ExtResource("7_kusvv")
+camera = NodePath("../../Player/Camera3D2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Node3D/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12442, -0.279084)
-shape = SubResource("BoxShape3D_5unvu")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Node3D/StaticBody3D/CollisionShape3D"]
-mesh = SubResource("BoxMesh_80u6o")
-
-[node name="Node3D2" parent="Objects" instance=ExtResource("6_epvex")]
-transform = Transform3D(0.5, 0, 0, 0, 0.965926, 0.517638, 0, -0.258819, 1.93185, -8.5, 1.55, 2)
+[node name="PoolSplitter02" parent="Objects/Pool02" instance=ExtResource("7_72qob")]
 
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(0.5, -0.527203, 0.687064, 0, 0.793353, 0.608761, -0.866025, -0.304381, 0.396677, 20, 15, 10)

@@ -1,28 +1,20 @@
 extends Node3D
 
 @export var connected_portal: Node3D
-# @export var player: CharacterBody3D
 @export var player_camera: Camera3D
+
+var tracked_objects = []
+var tracked_liquid_particles = []
 
 @onready var self_camera: Camera3D = $PortalSurface/SubViewport/PortalCamera
 @onready var self_viewport: SubViewport = $PortalSurface/SubViewport
-
-var tracked_objects = []
-
-'''
-func _ready() -> void:
-    if player.camera:
-        print("Found player camera!")
-        player_camera = player.get_node("Camera3D")
-'''
+@onready var water_system: Node3D = $"../WaterSystem01"
 
 func _process(delta: float) -> void:
     update_everything()
-    pass
 
 func _physics_process(delta: float) -> void:
     update_everything()
-    pass
 
 func update_everything():
     if tracked_objects.size() > 0:
@@ -40,24 +32,45 @@ func update_everything():
     
     var world_3d = get_viewport().world_3d
     self_camera.environment = world_3d.environment.duplicate()
-    self_camera.environment.tonemap_mode = Environment.TONE_MAPPER_LINEAR	
+    self_camera.environment.tonemap_mode = Environment.TONE_MAPPER_LINEAR
+    
+    for particle in tracked_liquid_particles:
+        if particle[1] != null:
+            var offset = global_transform.origin - particle[0].global_transform.origin
+            particle[1].global_transform.origin = connected_portal.global_transform.origin - offset
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
     if (not body.is_class("StaticBody3D") or body.is_class("AnimatableBody3D")) and not body.is_class("CSGShape3D"):
-        var local_pos = global_transform.affine_inverse() * body.global_transform.origin
+        var local_pos = global_transform.affine_inverse().origin + body.global_transform.origin
         tracked_objects.append([body, _nonzero_sign(local_pos.z), _nonzero_sign(local_pos.z)])
+    if body.is_in_group("liquid_particle"):
+        tracked_liquid_particles.append([body, null])
 
 func _on_area_3d_body_exited(body: Node3D) -> void:
     for object in tracked_objects:
         if object[0] == body:
             tracked_objects.erase(object)
+    for particle in tracked_liquid_particles:
+        if particle[0] == body:
+            if particle[1] != null:
+                particle[1].queue_free()
+                print("deleted duplicate particle!")
+            tracked_liquid_particles.erase(particle)
 
 func track_objects_pass():
     for object in tracked_objects:
-        var local_pos = global_transform.affine_inverse() * object[0].global_transform.origin
+        var local_pos = global_transform.affine_inverse().origin + object[0].global_transform.origin
         object[2] = _nonzero_sign(local_pos.z)
         if object[1] != object[2]:
             move_to_other_portal(object)
+            for particle in tracked_liquid_particles:
+                if particle[0] == object[0]:
+                    var body_copy = object[0].duplicate()
+                    get_tree().get_root().add_child(body_copy)
+                    print("added duplicate particle!")
+                    particle[1] = body_copy
+                    var offset = global_transform.origin - object[0].global_transform.origin
+                    particle[1].global_transform.origin = connected_portal.global_transform.origin - offset
         object[1] = object[2]
 
 func move_to_other_portal(object: Array):

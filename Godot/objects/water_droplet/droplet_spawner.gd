@@ -9,7 +9,7 @@ var spawned = 0
 func _physics_process(delta: float) -> void:
     if spawned < 2_000:
         var droplet_instance = droplet.instantiate()
-        var offset = Vector3(rng.randf_range(-1, 1), 0.1, rng.randf_range(-1, 1))
+        var offset = Vector3(rng.randf_range(-2.0, 2.0), 0.1, rng.randf_range(-1.0, 1.0))
         get_tree().current_scene.add_child(droplet_instance)
         droplet_instance.global_transform.origin = global_transform.origin - offset
         
